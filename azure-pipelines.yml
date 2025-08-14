@@ -14,26 +14,29 @@ steps:
   displayName: "Installing module in Client"
   inputs:
     command: 'install'
-    workingDir: 'Client/frontends'
+    workingDir: 'Client'
+    verbose: true
 
 
 - task: Npm@1
   displayName: "Installing module in server"
   inputs:
     command: 'install'
-    workingDir: 'Server/Backend'
+    workingDir: 'Server'
+    verbose: true
+    
 - task: Npm@1
   displayName: "Building module in client"
   inputs:
     command: 'custom'
-    workingDir: 'Client/frontends'
+    workingDir: 'Client'
     customCommand: 'run build'
 
 - task: CopyFiles@2
   inputs:
     Contents: |
-      Client/frontends/dist/**
-      Server/Backend/**
+      Client/dist/**
+      Server/**
     TargetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
